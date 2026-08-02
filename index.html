@@ -3,8 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>💕 恋爱小屋 - 属于我们的甜蜜空间</title>
-  
+  <title>💕 恋爱小屋</title>
+  <meta name="theme-color" content="#ff6b9d">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192x192.png">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(135deg, #fff0f5 0%, #ffe4e9 100%);
+  min-height: 100vh;
+  padding: 16px;
+  color: #333;
+}
+
+#app {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
 /* 新增：记忆长廊时间轴样式 */
 .memory-timeline {
   position: relative;
@@ -283,12 +306,118 @@
   line-height: 1.8;
 }
 
+/* 基础表单样式 */
+.add-memory-container {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #ff6b9d;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.btn {
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.primary-btn:active, .outline-btn:active {
+  transform: scale(0.98);
+}
+
+.secondary-btn {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.secondary-btn:hover {
+  background: #e0e0e0;
+}
+
+.toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.8);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-size: 14px;
+  z-index: 9999;
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    bottom: 60px;
+  }
+  to {
+    opacity: 1;
+    bottom: 80px;
+  }
+}
+
+.home-header {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.home-header h1 {
+  font-size: 28px;
+  color: #c9184a;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #888;
+  font-size: 15px;
+}
+
 /* 响应式调整 */
 @media (max-width: 480px) {
   .timeline-item {
     padding-left: 52px;
   }
-  .timeline-timeline::before {
+  .memory-timeline::before {
     left: 20px;
   }
   .timeline-date {
@@ -296,1009 +425,16 @@
     height: 44px;
     font-size: 8px;
   }
+  body {
+    padding: 12px;
+  }
 }
-
-  
-    <style>
-        :root {
-            --pink: #ff6b9d;
-            --pink-light: #ff8fab;
-            --pink-lighter: #ffe0ec;
-            --pink-bg: #fff5f8;
-            --white: #ffffff;
-            --text: #4a3040;
-            --text-light: #7a6070;
-            --shadow: 0 4px 20px rgba(255, 107, 157, 0.15);
-            --shadow-lg: 0 8px 40px rgba(255, 107, 157, 0.2);
-            --radius: 20px;
-            --radius-sm: 12px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --gold: #ffb347;
-            --coral: #ff7f7f;
-            --lavender: #c9a0dc;
-            --mint: #7ec8a0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
-            background: linear-gradient(135deg, #ffe0ec 0%, #fff0f5 25%, #fde2e9 50%, #fff5f8 75%, #ffe8f0 100%);
-            background-attachment: fixed;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* 背景装饰 */
-        .bg-decoration {
-            position: fixed;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.6;
-        }
-        .bg-circle {
-            position: fixed;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-            animation: floatCircle 15s ease-in-out infinite;
-        }
-        .bg-circle:nth-child(1) {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(255, 143, 171, 0.25) 0%, transparent 70%);
-            top: -50px;
-            left: -60px;
-            animation-delay: 0s;
-        }
-        .bg-circle:nth-child(2) {
-            width: 250px;
-            height: 250px;
-            background: radial-gradient(circle, rgba(201, 160, 220, 0.2) 0%, transparent 70%);
-            bottom: -80px;
-            right: -70px;
-            animation-delay: -5s;
-            animation-duration: 18s;
-        }
-        .bg-circle:nth-child(3) {
-            width: 180px;
-            height: 180px;
-            background: radial-gradient(circle, rgba(255, 179, 71, 0.2) 0%, transparent 70%);
-            top: 40%;
-            left: 60%;
-            animation-delay: -10s;
-            animation-duration: 20s;
-        }
-
-        @keyframes floatCircle {
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1);
-            }
-            25% {
-                transform: translate(30px, -40px) scale(1.1);
-            }
-            50% {
-                transform: translate(-20px, 20px) scale(0.9);
-            }
-            75% {
-                transform: translate(15px, 35px) scale(1.05);
-            }
-        }
-
-        /* 主容器 */
-        .app-container {
-            width: 100%;
-            max-width: 460px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 28px;
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
-            position: relative;
-            z-index: 1;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            min-height: 85vh;
-            max-height: 95vh;
-            display: flex;
-            flex-direction: column;
-            transition: var(--transition);
-        }
-
-        /* 顶部标题栏 */
-        .header {
-            background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 40%, #ff9bb5 100%);
-            padding: 16px 20px;
-            text-align: center;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.25);
-            border-radius: 50%;
-            filter: blur(15px);
-        }
-        .header .title {
-            font-size: 1.4em;
-            font-weight: 700;
-            letter-spacing: 1px;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-        .header .subtitle {
-            font-size: 0.85em;
-            opacity: 0.9;
-            margin-top: 2px;
-            position: relative;
-            z-index: 1;
-            font-weight: 400;
-            letter-spacing: 2px;
-        }
-        .header .sparkle {
-            position: absolute;
-            pointer-events: none;
-            animation: sparkleFloat 3s ease-in-out infinite;
-            font-size: 1.2em;
-        }
-        @keyframes sparkleFloat {
-            0%,
-            100% {
-                transform: translateY(0) scale(1);
-                opacity: 0.7;
-            }
-            50% {
-                transform: translateY(-15px) scale(1.3);
-                opacity: 1;
-            }
-        }
-
-        /* 内容区域 */
-        .content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-        }
-        .content::-webkit-scrollbar {
-            width: 4px;
-        }
-        .content::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .content::-webkit-scrollbar-thumb {
-            background: #ffccd5;
-            border-radius: 10px;
-        }
-
-        /* 底部导航 */
-        .bottom-nav {
-            display: flex;
-            background: rgba(255, 255, 255, 0.95);
-            border-top: 1px solid #ffe0ec;
-            padding: 6px 4px;
-            padding-bottom: max(6px, env(safe-area-inset-bottom));
-            gap: 2px;
-            flex-shrink: 0;
-        }
-        .nav-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 8px 4px;
-            cursor: pointer;
-            border-radius: 14px;
-            transition: var(--transition);
-            color: #b8949e;
-            font-size: 0.7em;
-            font-weight: 500;
-            gap: 4px;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            position: relative;
-        }
-        .nav-item .nav-icon {
-            font-size: 1.5em;
-            transition: var(--transition);
-        }
-        .nav-item.active {
-            color: #ff6b9d;
-            background: #fff0f5;
-            font-weight: 700;
-        }
-        .nav-item.active .nav-icon {
-            transform: scale(1.15);
-        }
-        .nav-item:active {
-            transform: scale(0.93);
-            background: #fff5f8;
-        }
-        .nav-item.active::after {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 25px;
-            height: 3px;
-            background: #ff6b9d;
-            border-radius: 0 0 5px 5px;
-        }
-
-        /* 通用卡片 */
-        .card {
-            background: white;
-            border-radius: var(--radius);
-            padding: 18px;
-            margin-bottom: 14px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 1px solid #fff0f5;
-            position: relative;
-            overflow: hidden;
-        }
-        .card:hover {
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-2px);
-        }
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 14px;
-            font-weight: 700;
-            font-size: 1.05em;
-            color: var(--text);
-        }
-        .card-header .icon {
-            font-size: 1.5em;
-        }
-
-        /* 按钮 */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 10px 20px;
-            border-radius: 25px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.9em;
-            transition: var(--transition);
-            font-family: inherit;
-            letter-spacing: 0.5px;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #ff6b9d, #ff8fab);
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.35);
-        }
-        .btn-primary:hover {
-            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.5);
-            transform: translateY(-1px);
-        }
-        .btn-primary:active {
-            transform: scale(0.95);
-        }
-        .btn-outline {
-            background: white;
-            color: #ff6b9d;
-            border: 2px solid #ffb3c9;
-        }
-        .btn-outline:hover {
-            background: #fff5f8;
-        }
-        .btn-sm {
-            padding: 6px 14px;
-            font-size: 0.8em;
-            border-radius: 20px;
-        }
-        .btn-danger {
-            background: #fff0f0;
-            color: #e05555;
-            border: 1px solid #ffcccc;
-        }
-        .btn-danger:hover {
-            background: #ffe0e0;
-        }
-        .btn-icon {
-            width: 36px;
-            height: 36px;
-            padding: 0;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2em;
-            background: #fff5f8;
-            border: 1px solid #ffe0ec;
-            color: #ff6b9d;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .btn-icon:hover {
-            background: #ffe0ec;
-        }
-
-        /* 输入框 */
-        .input {
-            width: 100%;
-            padding: 12px 16px;
-            border-radius: 25px;
-            border: 2px solid #ffe0ec;
-            font-size: 0.9em;
-            outline: none;
-            transition: var(--transition);
-            background: #fffafc;
-            font-family: inherit;
-            color: var(--text);
-        }
-        .input:focus {
-            border-color: #ff8fab;
-            box-shadow: 0 0 0 4px rgba(255, 143, 171, 0.1);
-            background: white;
-        }
-        .textarea {
-            width: 100%;
-            padding: 14px 16px;
-            border-radius: 20px;
-            border: 2px solid #ffe0ec;
-            font-size: 0.9em;
-            outline: none;
-            resize: vertical;
-            min-height: 80px;
-            transition: var(--transition);
-            background: #fffafc;
-            font-family: inherit;
-            color: var(--text);
-        }
-        .textarea:focus {
-            border-color: #ff8fab;
-            box-shadow: 0 0 0 4px rgba(255, 143, 171, 0.1);
-            background: white;
-        }
-
-        /* ========== 恋爱小屋 - 首页 ========== */
-        .home-hero {
-            text-align: center;
-            padding: 10px 0;
-        }
-        .home-hero .house-emoji {
-            font-size: 4em;
-            animation: bounceHouse 2s ease-in-out infinite;
-            display: inline-block;
-        }
-        @keyframes bounceHouse {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            30% {
-                transform: translateY(-18px);
-            }
-            50% {
-                transform: translateY(0);
-            }
-            70% {
-                transform: translateY(-8px);
-            }
-        }
-        .big-countdown {
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #fff5f8, #ffe8f0);
-            border-radius: var(--radius);
-            margin: 14px 0;
-            border: 2px dashed #ffccd5;
-            position: relative;
-        }
-        .big-countdown .label {
-            font-size: 0.9em;
-            color: #b8949e;
-            letter-spacing: 2px;
-            margin-bottom: 6px;
-        }
-        .big-countdown .days {
-            font-size: 3.5em;
-            font-weight: 800;
-            color: #ff6b9d;
-            letter-spacing: 2px;
-            text-shadow: 0 3px 10px rgba(255, 107, 157, 0.2);
-        }
-        .big-countdown .days-sub {
-            font-size: 1em;
-            color: #c97a8f;
-            margin-top: 2px;
-        }
-        .home-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 14px;
-        }
-        .home-stat {
-            background: white;
-            border-radius: var(--radius-sm);
-            padding: 14px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            transition: var(--transition);
-            border: 1px solid #fff0f5;
-        }
-        .home-stat:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-        }
-        .home-stat .stat-icon {
-            font-size: 2em;
-            margin-bottom: 4px;
-        }
-        .home-stat .stat-num {
-            font-size: 1.6em;
-            font-weight: 700;
-            color: #ff6b9d;
-        }
-        .home-stat .stat-label {
-            font-size: 0.75em;
-            color: #b8949e;
-            margin-top: 2px;
-        }
-
-        /* ========== 倒计时页面 ========== */
-        .countdown-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 16px;
-            background: white;
-            border-radius: var(--radius-sm);
-            margin-bottom: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-            border-left: 4px solid #ff8fab;
-            transition: var(--transition);
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .countdown-item:hover {
-            box-shadow: var(--shadow);
-        }
-        .countdown-info {
-            flex: 1;
-            min-width: 120px;
-        }
-        .countdown-info .cd-title {
-            font-weight: 700;
-            color: var(--text);
-            font-size: 0.95em;
-        }
-        .countdown-info .cd-date {
-            font-size: 0.75em;
-            color: #b8949e;
-            margin-top: 2px;
-        }
-        .countdown-days {
-            font-weight: 800;
-            font-size: 1.3em;
-            color: #ff6b9d;
-            text-align: center;
-            min-width: 60px;
-        }
-        .countdown-days.future {
-            color: #c9a0dc;
-        }
-        .countdown-days .cd-sub {
-            font-size: 0.5em;
-            font-weight: 400;
-            display: block;
-            color: #b8949e;
-        }
-
-        /* ========== 任务打卡 ========== */
-        .task-progress-bar {
-            height: 8px;
-            background: #ffe0ec;
-            border-radius: 10px;
-            margin: 10px 0 16px;
-            overflow: hidden;
-        }
-        .task-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ff6b9d, #ff8fab);
-            border-radius: 10px;
-            transition: width 0.5s ease;
-        }
-        .task-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 14px;
-            background: white;
-            border-radius: var(--radius-sm);
-            margin-bottom: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-            transition: var(--transition);
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .task-item:hover {
-            box-shadow: var(--shadow);
-        }
-        .task-check {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            border: 2px solid #ffb3c9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            flex-shrink: 0;
-            font-size: 0.8em;
-            color: transparent;
-        }
-        .task-item.done .task-check {
-            background: #ff6b9d;
-            border-color: #ff6b9d;
-            color: white;
-        }
-        .task-item.done .task-title {
-            text-decoration: line-through;
-            color: #c9a0b8;
-        }
-        .task-title {
-            flex: 1;
-            font-weight: 500;
-            color: var(--text);
-            font-size: 0.9em;
-        }
-        .task-delete {
-            opacity: 0;
-            transition: var(--transition);
-            cursor: pointer;
-            font-size: 1.1em;
-            color: #d99;
-            padding: 4px 8px;
-            border-radius: 50%;
-        }
-        .task-item:hover .task-delete {
-            opacity: 1;
-        }
-
-        /* ========== 照片墙 ========== */
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-        }
-        .photo-item {
-            aspect-ratio: 1;
-            border-radius: var(--radius-sm);
-            overflow: hidden;
-            cursor: pointer;
-            position: relative;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            transition: var(--transition);
-            background: #ffe0ec;
-        }
-        .photo-item:hover {
-            transform: scale(1.03);
-            box-shadow: var(--shadow-lg);
-        }
-        .photo-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .photo-item .photo-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            font-size: 0.7em;
-            padding: 4px 8px;
-            text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .photo-add {
-            aspect-ratio: 1;
-            border-radius: var(--radius-sm);
-            border: 3px dashed #ffccd5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 2.5em;
-            color: #ffb3c9;
-            background: #fffafc;
-        }
-        .photo-add:hover {
-            border-color: #ff8fab;
-            color: #ff8fab;
-            background: #fff5f8;
-        }
-        .photo-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            animation: fadeIn 0.3s ease;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-        .photo-modal img {
-            max-width: 90vw;
-            max-height: 85vh;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-        .photo-modal .close-hint {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            color: white;
-            font-size: 2em;
-            cursor: pointer;
-            z-index: 101;
-        }
-
-        /* ========== 日记库 ========== */
-        .diary-item {
-            padding: 14px 16px;
-            background: white;
-            border-radius: var(--radius-sm);
-            margin-bottom: 10px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-            transition: var(--transition);
-            cursor: pointer;
-            position: relative;
-            border-left: 3px solid transparent;
-        }
-        .diary-item:hover {
-            box-shadow: var(--shadow);
-            border-left-color: #ff8fab;
-        }
-        .diary-item .diary-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 6px;
-        }
-        .diary-item .diary-date {
-            font-size: 0.75em;
-            color: #b8949e;
-        }
-        .diary-item .diary-mood {
-            font-size: 1.3em;
-        }
-        .diary-item .diary-title {
-            font-weight: 700;
-            color: var(--text);
-            font-size: 0.95em;
-        }
-        .diary-item .diary-preview {
-            font-size: 0.8em;
-            color: #b8949e;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-top: 4px;
-        }
-        .mood-selector {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin: 8px 0;
-        }
-        .mood-option {
-            font-size: 1.6em;
-            cursor: pointer;
-            padding: 6px 10px;
-            border-radius: 20px;
-            transition: var(--transition);
-            border: 2px solid transparent;
-            background: #fffafc;
-        }
-        .mood-option:hover {
-            background: #fff0f5;
-            border-color: #ffccd5;
-        }
-        .mood-option.selected {
-            background: #fff0f5;
-            border-color: #ff6b9d;
-            transform: scale(1.1);
-        }
-
-        /* ========== 愿望清单 ========== */
-        .wish-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 14px;
-            background: white;
-            border-radius: var(--radius-sm);
-            margin-bottom: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-            transition: var(--transition);
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .wish-item:hover {
-            box-shadow: var(--shadow);
-        }
-        .wish-star {
-            font-size: 1.5em;
-            transition: var(--transition);
-            flex-shrink: 0;
-            cursor: pointer;
-        }
-        .wish-item.fulfilled .wish-star {
-            filter: grayscale(0);
-            animation: starPop 0.4s ease;
-        }
-        .wish-item.fulfilled .wish-title {
-            text-decoration: line-through;
-            color: #c9a0b8;
-        }
-        @keyframes starPop {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.5);
-            }
-        }
-        .wish-title {
-            flex: 1;
-            font-weight: 500;
-            color: var(--text);
-            font-size: 0.9em;
-        }
-        .wish-date {
-            font-size: 0.7em;
-            color: #b8949e;
-        }
-
-        /* ========== 弹窗 ========== */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 50;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            animation: fadeIn 0.3s ease;
-        }
-        .modal-sheet {
-            background: white;
-            border-radius: 24px 24px 0 0;
-            padding: 20px;
-            width: 100%;
-            max-width: 460px;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
-            animation: slideUp 0.35s ease;
-        }
-        @keyframes slideUp {
-            from {
-                transform: translateY(100%);
-            }
-            to {
-                transform: translateY(0);
-            }
-        }
-        .modal-sheet h3 {
-            text-align: center;
-            margin-bottom: 16px;
-            color: var(--text);
-            font-size: 1.1em;
-        }
-        .modal-close {
-            position: absolute;
-            top: 12px;
-            right: 16px;
-            font-size: 1.4em;
-            cursor: pointer;
-            color: #b8949e;
-            z-index: 5;
-            padding: 8px;
-        }
-
-        /* 飘落心形 */
-        .floating-hearts {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-        .floating-heart {
-            position: absolute;
-            animation: fallDown linear forwards;
-            opacity: 0.7;
-            pointer-events: none;
-        }
-        @keyframes fallDown {
-            0% {
-                transform: translateY(-60px) rotate(0deg) scale(1);
-                opacity: 0.9;
-            }
-            60% {
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateY(105vh) rotate(360deg) scale(0.3);
-                opacity: 0;
-            }
-        }
-
-        /* Toast */
-        .toast {
-            position: fixed;
-            top: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #333;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            z-index: 200;
-            font-size: 0.85em;
-            animation: toastIn 0.4s ease, toastOut 0.4s ease 1.8s forwards;
-            pointer-events: none;
-        }
-        @keyframes toastIn {
-            from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-        }
-        @keyframes toastOut {
-            from {
-                opacity: 1;
-            }
-            to {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-20px);
-            }
-        }
-
-        /* 响应式 */
-        @media (max-width: 480px) {
-            .app-container {
-                max-width: 100%;
-                border-radius: 22px;
-                min-height: 90vh;
-                max-height: 98vh;
-            }
-            .photo-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 6px;
-            }
-            .big-countdown .days {
-                font-size: 2.8em;
-            }
-            .nav-item {
-                font-size: 0.65em;
-                padding: 6px 2px;
-            }
-            .nav-item .nav-icon {
-                font-size: 1.3em;
-            }
-        }
-    </style>
+</style>
 </head>
 <body>
+<div id="app"></div>
 
-    <!-- 背景装饰 -->
-    <div class="bg-circle"></div>
-    <div class="bg-circle"></div>
-    <div class="bg-circle"></div>
-    <div class="floating-hearts" id="floatingHearts"></div>
-
-    <!-- 主容器 -->
-    <div class="app-container" id="appContainer">
-        <!-- 头部 -->
-        <div class="header" id="headerBar">
-            <div class="title" id="headerTitle">🏡 恋爱小屋</div>
-            <div class="subtitle" id="headerSubtitle">属于我们的甜蜜空间</div>
-        </div>
-
-        <!-- 内容区 -->
-        <div class="content" id="contentArea"></div>
-
-        <!-- 底部导航 -->
-        <div class="bottom-nav">
-            <div class="nav-item active" data-tab="home" onclick="switchTab('home')">
-                <span class="nav-icon">🏠</span>小屋
-            </div>
-            <div class="nav-item" data-tab="countdown" onclick="switchTab('countdown')">
-                <span class="nav-icon">⏰</span>倒计时
-            </div>
-            <div class="nav-item" data-tab="tasks" onclick="switchTab('tasks')">
-                <span class="nav-icon">✅</span>打卡
-            </div>
-            <div class="nav-item" data-tab="photos" onclick="switchTab('photos')">
-                <span class="nav-icon">📸</span>照片
-            </div>
-            <div class="nav-item" data-tab="diary" onclick="switchTab('diary')">
-                <span class="nav-icon">📝</span>日记
-            </div>
-            <div class="nav-item" data-tab="wishes" onclick="switchTab('wishes')">
-                <span class="nav-icon">💝</span>愿望
-            </div>
-        </div>
-    </div>
-
-    <!-- 照片查看弹窗 -->
-    <div id="photoModal" class="photo-modal" style="display:none;" onclick="closePhotoModal()">
-        <span class="close-hint">✕</span>
-        <img id="photoModalImg" src="" alt="照片" />
-    </div>
-
-    <!-- 通用弹窗 -->
-    <div id="modalOverlay" class="modal-overlay" style="display:none;" onclick="closeModal(event)">
-        <div class="modal-sheet" id="modalSheet" onclick="event.stopPropagation()">
-            <span class="modal-close" onclick="closeModalDirect()">✕</span>
-            <div id="modalContent"></div>
-        </div>
-    </div>
-
-    <script>
+<script>
 let memories = JSON.parse(localStorage.getItem('loveMemories')) || [];
 
 // ============ 工具函数 ============
@@ -1389,7 +525,7 @@ function renderHome() {
 
       <!-- PWA安装提示 -->
       <div style="text-align:center;margin-top:16px;">
-        <button class="btn btn-outline" onclick="showInstallPrompt()" id="installBtn" style="display:none;">
+        <button class="btn" onclick="showInstallPrompt()" id="installBtn" style="display:none;border:1px solid #ff6b9d;background:white;color:#ff6b9d;">
           📱 添加到主屏幕
         </button>
       </div>
@@ -1484,14 +620,14 @@ function renderTimeline() {
   
   container.innerHTML = sortedMemories.map((memory, index) => `
     <div class="timeline-item">
-      <div class="timeline-date">${formatDate(memory.date)}</div>
+      <div class="timeline-date">${formatDate(memory.date).split(' ')[0].replace(/-/g, '<br>')}</div>
       <div class="timeline-card">
         <h3 class="memory-title">${memory.title}</h3>
         ${memory.content ? `<p class="memory-content">${memory.content.replace(/\n/g, '<br>')}</p>` : ''}
-        ${memory.image ? `<div class="memory-photo"><img src="${memory.image}" alt="${memory.title}" loading="lazy" onclick="openPhoto('${memory.image}')"/></div>` : ''}
+        ${memory.image ? `<div class="memory-photo"><img src="${memory.image}" alt="${memory.title}" loading="lazy" onclick="openPhoto('${memory.image.replace(/'/g, '&apos;')}')"/></div>` : ''}
         <div class="memory-actions">
-          <button class="small-btn edit-btn" onclick="editMemory(${sortedMemories.indexOf(memory)})">编辑</button>
-          <button class="small-btn delete-btn" onclick="deleteMemory(${sortedMemories.indexOf(memory)})">删除</button>
+          <button class="small-btn edit-btn" onclick="editMemory(${index})">编辑</button>
+          <button class="small-btn delete-btn" onclick="deleteMemory(${index})">删除</button>
         </div>
       </div>
     </div>
@@ -1668,7 +804,6 @@ function showInstallPrompt() {
   if (deferredPrompt) {
     installApp();
   } else {
-    showToast('📱 请使用浏览器菜单中的"添加到主屏幕"功能');
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
     const isAndroid = /Android/.test(navigator.userAgent);
     
@@ -1693,11 +828,10 @@ document.addEventListener('DOMContentLoaded', function() {
   if (window.matchMedia('(display-mode: standalone)').matches) {
     console.log('恋爱小屋已作为PWA运行');
   }
+  console.log('❤️ 恋爱小屋已就绪！');
+  console.log('🏠 所有数据存储在浏览器本地，请勿清除浏览器数据哦~');
+  console.log('📷 照片存储在localStorage中，请注意存储空间限制（约5-10MB）');
 });
-
-    </script>
+</script>
 </body>
 </html>
-
-
- 
